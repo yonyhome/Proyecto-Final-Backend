@@ -6,9 +6,11 @@ const URLMONGO="mongodb+srv://admin:wSDGhlrxWDglTMpC@backend.voagjxh.mongodb.net
 const port=9001
 const  app = express()
 const userRoutes = require("./routes/UserRoute")
+const productRoutes = require("./routes/ProductRoute")
 //Middleware 
 app.use(express.json())
 app.use('/api',userRoutes)
+app.use('/api',productRoutes)
 
 // routes 
 app.get('/',(req,res) =>{
