@@ -13,7 +13,7 @@ router.post("/product", (req, res) => {
         .catch((err) => res.json({ message: err }));
 });
 //Get all products
-router.get("/Products", (req, res) => {
+router.get("/products", (req, res) => {
     ProducModel
         .find()
         .then((data) => res.json(data))

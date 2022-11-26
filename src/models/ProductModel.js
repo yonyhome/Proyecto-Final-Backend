@@ -2,7 +2,7 @@ const mongoose =require("mongoose")
 const productSchema = new mongoose.Schema({
     
     nombre:{type:String,require:true},
-    categoría:{
+    categoria:{
       type:mongoose.Schema.ObjectId,
       ref:'categoriaproducto',
     },
