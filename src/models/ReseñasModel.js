@@ -6,13 +6,13 @@ const reseñaSchema = new mongoose.Schema({
         ref:'producto',
        
       },
-    idproducto:{
+    idusuario:{
         type:mongoose.Schema.ObjectId,
         ref:'usuario',
        
       },
     puntuacion:{type:Number,require:true},
-    desc:{type:String,require:true},
+    descripcion:{type:String,require:true},
   
     },{
       versionKey:false
