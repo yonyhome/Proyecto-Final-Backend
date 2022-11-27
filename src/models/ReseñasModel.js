@@ -1,15 +1,13 @@
 const mongoose =require("mongoose")
-const reseñaSchema = new mongoose.Schema({
+const resenaSchema = new mongoose.Schema({
     
     idproducto:{
         type:mongoose.Schema.ObjectId,
-        ref:'producto',
-       
+        immutable:true
       },
     idusuario:{
         type:mongoose.Schema.ObjectId,
-        ref:'usuario',
-       
+        immutable:true
       },
     puntuacion:{type:Number,require:true},
     descripcion:{type:String,require:true},
@@ -18,4 +16,4 @@ const reseñaSchema = new mongoose.Schema({
       versionKey:false
     });
 
-module.exports=mongoose.model('reseña',reseñaSchema)
+module.exports=mongoose.model('reseña',resenaSchema)

@@ -8,13 +8,13 @@ const  app = express()
 const userRoutes = require("./routes/UserRoute")
 const productRoutes = require("./routes/ProductRoute")
 const CatProRoutes = require("./routes/CategoriaProductoRoute")
-
+const resRoutes= require("./routes/Resena")
 //Middleware 
 app.use(express.json())
 app.use('/api',userRoutes)
 app.use('/api',productRoutes)
 app.use('/api',CatProRoutes)
-
+app.use('/api',resRoutes)
 // routes 
 app.get('/',(req,res) =>{
     res.send('API HOME')
