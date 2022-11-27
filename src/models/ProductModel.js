@@ -4,7 +4,7 @@ const productSchema = new mongoose.Schema({
     nombre:{type:String,require:true},
     categoria:{
       type:mongoose.Schema.ObjectId,
-      ref:'categoriaproducto',
+      ref:'categoriaproducto'
     },
     fechacompra:{type: Date, default: Date.now },
     precio:{type:Number,require:true},
