@@ -53,7 +53,7 @@ router.get("/product/category/:category", (req, res) => {
         .catch((err) => res.json({ message: err }));
 });
 //update a product
-router.put("/Produc/:id", (req, res) => {
+router.put("/product/:id", (req, res) => {
     const { id } = req.params;
     const { nombre, categoria, precio, reseña} = req.body;
     ProducModel
@@ -63,7 +63,7 @@ router.put("/Produc/:id", (req, res) => {
 });
 
 //Delete a product
-router.delete('/Produc/:id', async (req,res) => {
+router.delete('/product/:id', async (req,res) => {
     const id= req.params.id;
     try{
     const deleteProduc= await ProducModel.findByIdAndRemove(id)
