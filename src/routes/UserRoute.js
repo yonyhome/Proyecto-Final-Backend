@@ -12,6 +12,15 @@ router.post("/user", (req, res) => {
         .then((data) => res.json(data))
         .catch((err) => res.json({ message: err }));
 });
+//login
+router.get("/user/login", (req,res)=>{
+    const {usuario, contraseña} = req.body;
+    console.log(usuario)
+    UserModel
+        .find({usuario})
+        .then((data) => res.json(data))
+        .catch((err) => res.json({ message: err }));
+});
 router.get("/users", (req, res) => {
     UserModel
         .find()
