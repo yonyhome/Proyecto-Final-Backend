@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const ReseñasModel = require("../models/ReseñasModel");
+const ResenasModel = require("../models/ReseñasModel");
 const UserModel = require("../models/UserModel");
 const ProductoModel=require("../models/ProductModel");
 const mongoose = require("mongoose");
@@ -22,7 +22,9 @@ try{
        todasresenas= todasresenas.flat();
        res.json(todasresenas)
 }catch(e){
-  res.json(e.message)
+  res.json({
+    message:'Usuario no encontrado'
+  })
 } 
 })
 //Get reseña por producto
@@ -72,7 +74,11 @@ try{
 router.post('/resena/createresena/:id_producto/:id_usuario', async (req,res) => {
   const idproducto= req.params.id_producto;
   const idusuario=req.params.id_usuario;
+  const {idtoken} = req.body;
   // CREACION DE DOCUMENTO SEGUN MODELO
+  
+  const usuarioadmin= await UserModel.findById(idtoken)
+  if(usuarioadmin!=null){
   try{
       const {puntuacion,descripcion} = req.body;
       const newResena = new ResenasModel({
@@ -89,7 +95,7 @@ router.post('/resena/createresena/:id_producto/:id_usuario', async (req,res) => 
       }
       
   });
-  const producto= await ProductModel.findByIdAndUpdate(idproducto,{
+  const producto= await ProductoModel.findByIdAndUpdate(idproducto,{
       $push:{
           'reseñas':resena
       }
@@ -101,11 +107,20 @@ router.post('/resena/createresena/:id_producto/:id_usuario', async (req,res) => 
   }catch(e){
    res.json(e.message); 
   }
+  }else{
+    res.json({
+      message:'Credenciales incorrectas'
+    })
+  }
 })
 //Delete reseña
 router.delete('/deleteresena/:id', async (req,res) => {
   const id= req.params.id;
   // CREACION DE DOCUMENTO SEGUN MODELO
+  const {idtoken} = req.body;
+  
+  const usuarioadmin= await UserModel.findById(idtoken)
+  if(usuarioadmin!=null){
   try{
   const deleteresena= await ResenasModel.findByIdAndRemove(id,{idproducto:1,idusuario:1,_id:0})
   const idproducto=deleteresena.idproducto
@@ -126,5 +141,10 @@ router.delete('/deleteresena/:id', async (req,res) => {
   }catch(e){
    res.json(e.message); 
   }
+}else{
+  res.json({
+    message:'Credenciales incorrectas'
+  })
+}
 })
 module.exports = router;
