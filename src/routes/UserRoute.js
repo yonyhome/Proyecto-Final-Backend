@@ -66,7 +66,9 @@ router.delete('/user/:id', async (req,res) => {
     // CREACION DE DOCUMENTO SEGUN MODELO
     const {idtoken} = req.body;
     UserModel.findById(idtoken)
-        .then(async (data) => {await UserModel.findByIdAndRemove(id).then((da)=>res.json(da)).catch((err)=>res.json({message:'Usuario no existe'}))})
+        .then(async (data) => {await UserModel.findByIdAndRemove(id).then((da)=>res.json({
+            message:'Usuario eliminado correctamente'
+        })).catch((err)=>res.json({message:'Usuario no existe'}))})
         .catch((err) => res.json({ message: 'Credenciales Incorrectas' }));
 
 }) 

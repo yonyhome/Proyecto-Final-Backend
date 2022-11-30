@@ -101,14 +101,14 @@ router.post('/resena/createresena/:id_producto/:id_usuario', async (req,res) => 
       }
       
   });
-  res.json({
-      Mensaje:'Se agrego correctamente la resena'
+  res.status(200).json({
+      message:'Se agrego correctamente la resena'
   });
   }catch(e){
-   res.json(e.message); 
+   res.status(404).json(e.message); 
   }
   }else{
-    res.json({
+    res.status(404).json({
       message:'Credenciales incorrectas'
     })
   }
@@ -125,21 +125,37 @@ router.delete('/deleteresena/:id', async (req,res) => {
   const deleteresena= await ResenasModel.findByIdAndRemove(id,{idproducto:1,idusuario:1,_id:0})
   const idproducto=deleteresena.idproducto
   const idusuario=deleteresena.idusuario
-  const usuario= await UserModel.findByIdAndUpdate(idusuario,{
+  try{
+    const usuario= await UserModel.findByIdAndUpdate(idusuario,{
       $pull:{
           reseñas:mongoose.Types.ObjectId(id)
       }
   });
-  const producto= await ProductoModel.findByIdAndUpdate(idproducto,{
+  try{
+    const producto= await ProductoModel.findByIdAndUpdate(idproducto,{
       $pull:{
           reseñas:mongoose.Types.ObjectId(id)
       }
-  });
-  res.json({
-      Mensaje:'Se eliminó correctamente la resena'
   });
   }catch(e){
-   res.json(e.message); 
+    res.json({
+      message:'Producto no encontrado'
+    })
+  }
+  }catch(e){
+    res.json({
+      message:'Usuario no encontrado'
+    })
+  }
+ 
+  
+  res.json({
+      message:'Se eliminó correctamente la resena'
+  });
+  }catch(e){
+   res.json({
+    message:'No se encontro algún id'
+   }); 
   }
 }else{
   res.json({
